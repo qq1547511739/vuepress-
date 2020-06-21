@@ -1,332 +1,4 @@
 # javascript进阶
-## 递归
-**认识递归**
-
-满足以下三个特点就是递归：
-1. 函数自己调用自己
-2. 一般情况有参数
-3. 一般情况下有return
-
-递归方法:
-  1. 首先去找临界值，即无需计算，获得的值。
-  2. 找这一次和上一次的关系
-  3. 假设当前函数已经可以使用，调用自身计算上一次
-
-一般情况不使用递归，使用递归会一次性开启很多内存，短时间开辟大量内存
-
-```javascript
-// 计算1~n的和？
-function sum(n){
-  var res = 0;
-  for(var i = 1; i <= n; i++){
-    res += i;
-  }
-  return res;
-}
-alert(sum(100));
-
-
-
-// 递归方法计算1~n的和？
-function sum(n){
-  if(n == 1){
-    return 1;
-  }
-  return sum(n - 1) + n;
-}
-alert(sum(100));
-```
-
-## 数组
-### 认识数组
-**数组：用一个变量存储一堆数据的数据结构。**
-```javascript
-声明数组：
-1、通过new创建数组
-参数：传入任意的数据，存储到数组中。   
-var arr = new Array(100, true, "hello");       
-2、省略new运算符创建数组
-var arr = Array(100, true, "hello");
-
-注:上述两种方法，传入参数只有一个，并且是数字的时候，直接声明这么长的一个数组。
-
-3、数组常量进行赋值。（JS一般使用中括号[]）;
-var arr = [100, true, "hello"];
-
-声明长度为10的数组，数组中没有数据。
-var arr = new Array(10);
-var arr = Array(10);
-```
-
-```javascript
-数组的属性：
-数组.length  返回值数组【元素】的个数。
-
-元素：将数组存储的每一个数据，叫做数组的元素。
-
-访问数组的元素：
-数组[下标]; 下标是从0开始的。
-
-
-var arr = [100, true, "hello"];
-alert(arr.length);  //3
-alert(arr[1]);      //true
-```
-
-以下通过循环给数组每个元素赋值，随机数。
-1. Math.random()  随机 [0,1)
-2. parseInt(Math.random() * 10);  随机0~9的整数
-
-```javascript
-//1、长度是10的数组
-var arr = new Array(10);
-for(var i = 0; i < arr.length; i++){
-  arr[i] = parseInt(Math.random() * 10);
-}
-  alert(arr);
-```
-
-
-### 数组遍历
-三种方法：
-1. for循环
-2. for...in 遍历   快速遍历/快速枚举
-3. forEach
-
-在页面上分别将每一个数输出。
-```javascript
-//for循环
-for(var i = 0; i < arr.length; i++){
-  document.write(arr[i] + "<br/>");
-}
-//for...in循环
-for(var i in arr){
-  document.write(arr[i] + "<br/>");
-}
-```
-
-```javascript
-forEach
-//第三种遍历数组的方法
-
-arr.forEach(function(item, index, arr){
-      // item当前遍历到的元素
-      // index当前遍历到元素的下标
-      // arr数组本身
-    document.write(item + ", " + index + ", " + arr + "<br/>");
-});
-```
-
-
-### 数组的方法
-数组的方法：push、pop、shift、unshift、concat、slice、join(传入拼接符)、reverse(逆序)、sort(数组排序)
-
-```javascript
-栈结构：
-结构：从同一头进，从同一头出。
-特点：先进后出。
-
-数组的两个方法形成栈结构：push pop
-
-  push
-    格式：数组.push(参数1, 参数2...);
-    功能：给数组的末尾添加元素。
-    返回值：插完元素以后数组的长度。
-
-var arr = ["北京", "上海", "广州"];
-var res = arr.push("深圳", "天津", "成都");
-alert(arr);
-alert(res);
-```
-
-
-```javascript
-  pop
-    格式：数组.pop()
-    参数：没有参数
-    返回值：取下一个元素
-    功能：从数组末尾取下一个元素
-
-var arr = ["北京", "上海", "广州"];
-var res = arr.pop();
-alert(res);
-alert(arr);
-```
-
-```javascript
-队列结构
-结构：从末尾进，从头部出。
-特点：先进先出
-
-shift()
-格式：数组.shift()
-参数：没有参数
-功能：从数组的头部取下一个元素
-返回值：取下的元素
-
-var arr = ["唐朝", "元朝", "清朝"];
-var res = arr.shift();
-alert(res);
-alert(arr);
-unshift()
-```
-
-
-```javascript
-格式：数组.unshift(参数1, 参数2...)
-功能：从数组的头部插入元素
-返回值：插完元素以后数组的长度。
-
-var arr = ["唐朝", "元朝", "清朝"];
-var res = arr.unshift("隋朝", "商汤");
-alert(res);
-alert(arr);
-```
-
-```javascript
-concat()
-1、拷贝原数组生成新数组
-2、合并数组
-  格式：数组.concat(数组，数据...)
-  返回值：合并成的新数组，原数组不会改变
-  注：就算传入的是数组，数组中的元素要单独拆出来再进行合并
-
-var arr1 = [10,20,30];
-var arr2 = [50,60,70];
-var newarr = arr1.concat(arr2,'hello',true)
-alert(newarr);
-alert(newarr.lenght);
-alert(arr1);
-```
-
-```javascript
-数组提取元素
-格式：slice(start, end); (不会修改原数组）
-功能：基于当前函数获取指定区域元素[start,end),含头不含尾，提取出元素生成新数组
-返回值：生成新数组，原数组不会发生改变
-
-var arr = [10,20,30,40,50,60];
-var newarr = arr.slice(1,4);
-alert(newarr); //20,30,40
-alert(arr); //10,20,30,40,50,60
-```
-
-```javascript
-splice()  增加，删除，修改
-  格式:数组.splice(start, length, 数据1,数据2...);
-  参数:
-    start 开始截取的位置
-    length 截取的元素的长度
-    第三个参数开始:在start位置，插入的元素。
-返回值:截取下来的元素组成的数组。
-
-增加：
-var arr = [10,20,30,40,50];
-var res = arr.splice(2, 0, "hello", "world");
-alert(arr);
-alert(res);
-
-删除：
-var res = arr.splice(1, 2);
-alert(arr); 
-alert(res); 
-
-修改：  (先删除，再增加)
-var arr =[10, 20, 30, 40,50];
-arr.splice(2, 1, "hello");
-alert(arr);//10, 20, hello, 40,50
-```
-
-### ES5新增的数组语法
-新增语法：indexof、数组遍历forEach、map映射、filter过滤、some某些、every每一个、reduce归并
-```javascript
-indexOf()
-  格式：数组.index(item, start);
-  参数： item 任意的数据  start 下标 可以不传入，默认是0
-  功能：在数组中查找第一次出现item元素下标，从start开始去查找
-  返回值： -1 没有查找到    >=0 查找到的元素的下标。
-
-var arr = [10, 20, 30, 40, 50, 20, 30];
-  var index = arr.indexOf(20, 2);
-  alert(index); //5
-```
-
-
-```javascript
-map() 映射
-
-var arr = [10, 20, 30, 40, 50];
-var newArr = arr.map(function(item, index, arr){
-    //遍历要做的事情  映射关系
-  return item * 1.3;
-});
-alert(newArr);
-alert(arr); 
-```
-
-
-```javascript
-filter() 过滤
-
-var arr = [10, 20, 30, 40, 50];
-var newArr = arr.filter(function(item, index, arr){
-    //过滤的条件
-    return item > 20;
-});
-alert(newArr);
-alert(arr); 
-```
-
-```javascript
-some  某些
-【注】在数组中查找是否有符合条件的元素，有返回true，没有返回false。
-短路操作：只要找到符合条件的元素，后面的循环就停止了。
-
-var arr = [10, 20, 30, 40, 50];
-var res = arr.some(function(item, index, arr){
-    alert(item);//10,20,30 短路操作
-    //过滤的条件
-    return item > 20;
-});
-console.log(res);//true
-console.log(arr); //[10, 20, 30, 40, 50]
-```
-
-```javascript
-every 每一个
-【注】在数组中查找每一个元素是否有符合条件，符合返回true，不符合返回false。
-短路操作：只要找到不符合条件的元素，后面的循环就停止了。
-                
-var arr = [10, 20, 30, 40, 50];
-var res = arr.every(function(item, index, arr){
-    alert(item);
-    //过滤的条件
-    return item < 100;
-});
-alert(res);
-alert(arr); 
-```
-
-### 二维数组
-二维数组：人为起的，不是官方语法
-
-数组存储数据，数组中每一个元素， 元素可以是任意的数据类型。
-
-注：数组中的元素可以是数组。
-
-```javascript
-var arr1 = [10, 20, 30];
-var arr = [true, 100, "hello", arr1];
-alert(arr.length); //4
-alert(arr[3] == arr1)  //true
-
-alert(arr[3][1]);
-alert(arr1[1])
-//以上两个获取的相等
-```
-
-
-
 ## 声明提升
 **声明提升：在当前作用域，声明变量和函数，会直接提升在整个代码的最前面运行**
 
@@ -1096,4 +768,336 @@ previousElementSibling
   div文本
   <strong>strong文本</strong>
 </div>
+```
+
+
+### 节点操作
+```javascript
+document.write()
+    【注】会覆盖页面上原有的内容。
+
+createElement()
+    格式：document.createElement()
+    参数：标签名
+    返回值：创建好的这个节点
+
+appendChild()
+    格式：node1.appendChild(node2);
+    功能：将node2节点插入到node1节点子节点的末尾
+
+createTextNode()
+    格式：document.createTextNode(文本);
+    功能：创建文本节点(纯文本)
+
+insertBefore()
+    格式：box1.parentNode.insertBefore(box2, box1);
+    功能：将box2添加到box1的前面
+
+replaceChild()
+    格式：box1.parentNode.replaceChild(box2, box1);
+    功能：用box2节点将box1节点替换掉。
+
+cloneNode()
+    格式：node.cloneNode()
+    格式2：node.cloneNode(true);  克隆节点本身和子节点
+    返回值：克隆出来的新节点
+
+
+removeChild()
+    格式：box.parentNode.removeChild(box);
+    功能：将box节点从页面上删除
+```
+
+
+```javascript
+window.onload = function(){
+    var oBtn = document.getElementById("btn1");
+    var oDiv = document.getElementById("div1");
+    oBtn.onclick = function(){
+        // document.write("<h1>hello world</h1>");
+        /* var oP = document.createElement("p");
+        var oTxt = document.createTextNode("<h1>hello world</h1>");
+        oP.appendChild(oTxt);
+
+        // oDiv.appendChild(oP);
+
+        //将oP节点插入到oDiv节点的前面
+        // document.body.insertBefore(oP, oDiv);
+
+        //用oP节点，将oDiv节点替换掉
+        document.body.replaceChild(oP, oDiv); */
+
+        // var newNode = oDiv.cloneNode();
+        /* var newNode = oDiv.cloneNode(true);
+        document.body.appendChild(newNode); */
+        document.body.removeChild(oDiv);
+
+    }
+}
+
+
+<div id = 'div1'>
+    <em>em</em>
+    div文本
+    <strong>strong</strong>
+</div>
+<button id = 'btn1'>节点操作</button>
+```
+
+### 找到当前点击按钮的下标
+点击按钮，输出当前按钮的下标
+```javascript
+    刻舟求剑
+//给他添加点击的驱动函数这是一个行为，点击按钮的时候要执行的函数又是另外一回事
+这样使用的话，每次点击按钮的下标都是3
+for(var i = 0; i < aBtns.length; i++){
+    aBtns[i].onclick = function(){
+        alert(i);
+    }
+}
+
+alert("循环结束了：" + i);
+
+
+        <button>按钮1</button>
+        <button>按钮2</button> 
+        <button>按钮3</button>
+```
+
+
+
+以下方法通过this可以输出正确的点击按钮下标：
+```javascript
+    点击按钮，输出当前按钮的下标
+for(var i = 0; i < aBtns.length; i++){
+    //给每一个按钮添加一个自定义属性
+    aBtns[i].index = i;
+    aBtns[i].onclick = function(){
+        alert(this.index);
+    }
+}
+
+alert("循环结束了：" + i);
+
+
+        <button>按钮1</button>
+        // index = 0 onclick = func 
+        <button>按钮2</button>
+        // index = 1 onclick = func 
+        <button>按钮3</button>
+        // index = 2 onclick = func 
+```
+
+## this关键字
+this概念：只要封装函数，任何一个函数系统都会内置一个叫做this的变量，<br/>
+this变量存储的是地址，是当前函数主人的地址。<br/>
+
+【注】this永远指向当前函数的主人。函数的主人要通过当前上下文去判断。<br/>
+
+this类似于现实生活中，用到的"我"<br/>
+
+```javascript
+  常用的情况：
+
+var person = {
+  username: "钢铁侠",
+  sex: "男",
+  show: function(){
+    alert(person.username); 
+    alert(this.username); 
+    //以上两者的指向都是同一个
+  }
+};
+```
+
+```javascript
+function show(){
+    alert(this);
+}
+//该函数没人调用的话指向windows
+```
+
+## 对象的遍历
+只有for in
+```javascript
+var person = {
+  name:'钢铁侠',
+  age:18,
+  sex:'男',
+}
+
+for(var i in person){
+  //i是当前遍历到的属性
+  document.write(i+','+person[i]+'<br/>')
+}
+```
+
+
+## 认识事件
+绑定事件<br/>
+    1、内联模式<br/>
+    2、外联模式/脚本模式(最多)<br/>
+
+绑定事件格式：<br/>
+    元素节点.on + 事件类型 = 匿名函数。<br/>
+
+click   事件类型<br/>
+onclick 事件处理的函数<br/>
+
+
+```javascript
+  <button onclick="btnclick()">内联模式</button>
+  <button id="btn1">外联模式</button>
+
+
+function btnclick() {
+  console.log('内联')
+}
+
+var obut = document.getElementById('btn1')
+obut.onclick = function(){
+  console.log('外联')
+}
+```
+
+## 事件类型
+事件类型的种类：<br/>
+一、鼠标事件（可以绑定在任意的元素节点上）<br/>
+    click      单击<br/>
+    dblclick   双击<br/>
+    mouseover  鼠标移入 <br/>
+    mouseout   鼠标移出<br/>
+    mousemove  鼠标移动（会不停的触发）<br/>
+    mousedown  鼠标按下<br/>
+    mouseup    鼠标抬起<br/>
+    mouseenter 鼠标移入<br/>
+    mouseleave 鼠标移出<br/>
+
+二、键盘事件（表单元素，全局window）<br/>
+    keydown    键盘按下（如果按下不放手，会一直触发）<br/>
+    keyup      键盘抬起<br/>
+
+keypress   键盘按下（只支持字符键）<br/>
+    
+三、HTML事件<br/>
+    1、window事件<br/>
+        load    当页面加载完成以后会触发<br/>
+        unload  当页面解构的时候触发(刷新页面，关闭当前页面)  IE浏览器兼容<br/>
+        scroll  页面滚动<br/>
+        resize  窗口大小发生变化的时候触发<br/>
+
+2、表单事件<br/>
+blur   失去焦点<br/>
+focus  获取焦点<br/>
+select 当我们在输入框内选中文本的时候触发<br/>
+change 当我们对输入框的文本进行修改并且失去焦点的时候<br/>
+
+【注】必须添加在form元素上<br/>
+submit 当我们点击submit上的按钮才能触发<br/>
+reset  当我们点击reset上的按钮才能触发<br/>
+
+
+## 事件对象的获取
+事件绑定：<br/>
+    元素节点.on + 事件类型 = 匿名函数;<br/>
+【注】系统会在事件绑定一旦完成的时候，会自动生成一个事件对象。<br/>
+
+【注】触发事件的时候，系统会自动去调用事件绑定的函数。将事件对象当做第一个参数传入。<br/>
+```javascript
+var oBtn = document.getElementById("btn1");
+//  oBtn.onclick = show;
+
+oBtn.onclick = function(ev){
+  //事件对象获取的方式，固定写法。
+  var e = ev || window.event;
+  alert(e);
+}
+
+<body>
+    <button id = 'btn1'>按钮</button>
+</body>
+```
+
+
+### 修改键
+事件对象的四个修改键：<br/>
+
+shiftKey  如果按下shift键，值就是true，否则是false<br/>
+ctrlKey<br/>
+altKey<br/>
+metakey （windows键  mac电脑下command键）<br/>
+
+### 键码和字符码
+```javascript
+键码:只在keydown下支持。
+【注】不管是在大写字母还是小写字母的情况下，返回的统一都是大写字母的ASIIC码值。
+    keyCode
+    which
+
+
+字符码: 只在keypress下支持
+【注】区分大小写，并且按下的时候我当前按下这个键的ASCII码值。
+【注】
+    charCode
+    which
+```
+
+```javascript
+window.onload = function(){
+  /*  window.onkeydown = function(ev){
+        var e = ev || window.event;
+      //  alert(e.keyCode);
+      // alert(e.which);
+      var which = e.keyCode || e.which;
+      alert(which); //回车=13
+    } */
+
+    window.onkeypress = function(ev){
+      var e = ev || window.event;
+      var which = e.charCode || e.which;
+
+      alert(which);
+    }
+}
+```
+
+
+## target 触发对象
+target   目标对象/触发对象  事件对象的属性<br/>
+注：这个事件是由谁而起的。<br/>
+IE8以下不兼容 window.event.srcElement;<br/>
+
+```javascript
+  var oLi = document.getElementById("li1");
+  oLi.onclick = function(ev){
+      var e = ev || window.event;
+      var target = e.target || window.event.srcElement;
+    alert(this.innerHTML);
+    alert(target.innerHTML);
+  //以上两者输出结果一样
+  //注：this不等于 target
+  } 
+```
+
+## 事件冒泡
+浏览器上事件天生的一个特点：事件流<br/>
+事件冒泡：由里向外逐级触发。<br/>
+事件捕获：由外向里逐级触发。<br/>
+
+
+阻止事件冒泡：浏览器兼容问题<br/>
+事件对象的属性和方法：<br/>
+cancelBubble=true<br/>
+stopPropagation()<br/>
+
+```javascript
+//封装跨浏览器兼容的阻止事件冒泡
+function stopBubble(e){
+    //e 是事件对象
+    if(e.stopPropagation){
+        e.stopPropagation();
+    }else{
+        e.cancelBubble = true;
+    }
+}
 ```

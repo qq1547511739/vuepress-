@@ -163,3 +163,8 @@ destroyed
 ![Alt text](./img/sm1.jpg)<br/><br/><br/><br/><br/><br/><br/><br/>
 ![Alt text](./img/sm2.jpg)<br/>
 
+比较常用的生命周期函数
+```javascript
+created  用于网络请求  苦A托
+```
+

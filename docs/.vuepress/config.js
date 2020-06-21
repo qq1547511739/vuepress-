@@ -27,6 +27,8 @@ module.exports = {
         items: [
           { text: 'cli3搭建', link: '/vue记录/cli3搭建过程/' },
           { text: '生命周期', link: '/vue记录/生命周期/' },
+          { text: 'MVVM的理解', link: '/vue记录/MVVM的理解/' },
+          { text: 'vue基础', link: '/vue记录/vue基础/' },
         ]
       },
       {

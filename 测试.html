@@ -6,16 +6,24 @@
   <title>Document</title>
 </head>
 <body>
-  
 </body>
 
 <script>
-  var i = 0;
-var timer = setInterval(function(){
-    if(i == 5){
-        clearInterval(timer);
-    }
-    document.write(i++ + "<br/>");
-}, 1000);
+             window.onload = function(){
+                /*  window.onkeydown = function(ev){
+                     var e = ev || window.event;
+                    //  alert(e.keyCode);
+                    // alert(e.which);
+                    var which = e.keyCode || e.which;
+                    alert(which); //回车=13
+                 } */
+
+                 window.onkeypress = function(ev){
+                    var e = ev || window.event;
+                    var which = e.charCode || e.which;
+
+                    alert(which);
+                 }
+             }
 </script>
 </html>

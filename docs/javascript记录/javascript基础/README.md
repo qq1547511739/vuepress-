@@ -471,3 +471,329 @@ var a = 10, b = 20;
 show(a); //15, 100 //a = a
 alert(a + ", " + b); //10, 20
 ```
+
+## 递归
+**认识递归**
+
+满足以下三个特点就是递归：
+1. 函数自己调用自己
+2. 一般情况有参数
+3. 一般情况下有return
+
+递归方法:
+  1. 首先去找临界值，即无需计算，获得的值。
+  2. 找这一次和上一次的关系
+  3. 假设当前函数已经可以使用，调用自身计算上一次
+
+一般情况不使用递归，使用递归会一次性开启很多内存，短时间开辟大量内存
+
+```javascript
+// 计算1~n的和？
+function sum(n){
+  var res = 0;
+  for(var i = 1; i <= n; i++){
+    res += i;
+  }
+  return res;
+}
+alert(sum(100));
+
+
+
+// 递归方法计算1~n的和？
+function sum(n){
+  if(n == 1){
+    return 1;
+  }
+  return sum(n - 1) + n;
+}
+alert(sum(100));
+```
+
+## 数组
+### 认识数组
+**数组：用一个变量存储一堆数据的数据结构。**
+```javascript
+声明数组：
+1、通过new创建数组
+参数：传入任意的数据，存储到数组中。   
+var arr = new Array(100, true, "hello");       
+2、省略new运算符创建数组
+var arr = Array(100, true, "hello");
+
+注:上述两种方法，传入参数只有一个，并且是数字的时候，直接声明这么长的一个数组。
+
+3、数组常量进行赋值。（JS一般使用中括号[]）;
+var arr = [100, true, "hello"];
+
+声明长度为10的数组，数组中没有数据。
+var arr = new Array(10);
+var arr = Array(10);
+```
+
+```javascript
+数组的属性：
+数组.length  返回值数组【元素】的个数。
+
+元素：将数组存储的每一个数据，叫做数组的元素。
+
+访问数组的元素：
+数组[下标]; 下标是从0开始的。
+
+
+var arr = [100, true, "hello"];
+alert(arr.length);  //3
+alert(arr[1]);      //true
+```
+
+以下通过循环给数组每个元素赋值，随机数。
+1. Math.random()  随机 [0,1)
+2. parseInt(Math.random() * 10);  随机0~9的整数
+
+```javascript
+//1、长度是10的数组
+var arr = new Array(10);
+for(var i = 0; i < arr.length; i++){
+  arr[i] = parseInt(Math.random() * 10);
+}
+  alert(arr);
+```
+
+
+### 数组遍历
+三种方法：
+1. for循环
+2. for...in 遍历   快速遍历/快速枚举
+3. forEach
+
+在页面上分别将每一个数输出。
+```javascript
+//for循环
+for(var i = 0; i < arr.length; i++){
+  document.write(arr[i] + "<br/>");
+}
+//for...in循环
+for(var i in arr){
+  document.write(arr[i] + "<br/>");
+}
+```
+
+```javascript
+forEach
+//第三种遍历数组的方法
+
+arr.forEach(function(item, index, arr){
+      // item当前遍历到的元素
+      // index当前遍历到元素的下标
+      // arr数组本身
+    document.write(item + ", " + index + ", " + arr + "<br/>");
+});
+```
+
+
+### 数组的方法
+数组的方法：push、pop、shift、unshift、concat、slice、join(传入拼接符)、reverse(逆序)、sort(数组排序)
+
+```javascript
+栈结构：
+结构：从同一头进，从同一头出。
+特点：先进后出。
+
+数组的两个方法形成栈结构：push pop
+
+  push
+    格式：数组.push(参数1, 参数2...);
+    功能：给数组的末尾添加元素。
+    返回值：插完元素以后数组的长度。
+
+var arr = ["北京", "上海", "广州"];
+var res = arr.push("深圳", "天津", "成都");
+alert(arr);
+alert(res);
+```
+
+
+```javascript
+  pop
+    格式：数组.pop()
+    参数：没有参数
+    返回值：取下一个元素
+    功能：从数组末尾取下一个元素
+
+var arr = ["北京", "上海", "广州"];
+var res = arr.pop();
+alert(res);
+alert(arr);
+```
+
+```javascript
+队列结构
+结构：从末尾进，从头部出。
+特点：先进先出
+
+shift()
+格式：数组.shift()
+参数：没有参数
+功能：从数组的头部取下一个元素
+返回值：取下的元素
+
+var arr = ["唐朝", "元朝", "清朝"];
+var res = arr.shift();
+alert(res);
+alert(arr);
+unshift()
+```
+
+
+```javascript
+格式：数组.unshift(参数1, 参数2...)
+功能：从数组的头部插入元素
+返回值：插完元素以后数组的长度。
+
+var arr = ["唐朝", "元朝", "清朝"];
+var res = arr.unshift("隋朝", "商汤");
+alert(res);
+alert(arr);
+```
+
+```javascript
+concat()
+1、拷贝原数组生成新数组
+2、合并数组
+  格式：数组.concat(数组，数据...)
+  返回值：合并成的新数组，原数组不会改变
+  注：就算传入的是数组，数组中的元素要单独拆出来再进行合并
+
+var arr1 = [10,20,30];
+var arr2 = [50,60,70];
+var newarr = arr1.concat(arr2,'hello',true)
+alert(newarr);
+alert(newarr.lenght);
+alert(arr1);
+```
+
+```javascript
+数组提取元素
+格式：slice(start, end); (不会修改原数组）
+功能：基于当前函数获取指定区域元素[start,end),含头不含尾，提取出元素生成新数组
+返回值：生成新数组，原数组不会发生改变
+
+var arr = [10,20,30,40,50,60];
+var newarr = arr.slice(1,4);
+alert(newarr); //20,30,40
+alert(arr); //10,20,30,40,50,60
+```
+
+```javascript
+splice()  增加，删除，修改
+  格式:数组.splice(start, length, 数据1,数据2...);
+  参数:
+    start 开始截取的位置
+    length 截取的元素的长度
+    第三个参数开始:在start位置，插入的元素。
+返回值:截取下来的元素组成的数组。
+
+增加：
+var arr = [10,20,30,40,50];
+var res = arr.splice(2, 0, "hello", "world");
+alert(arr);
+alert(res);
+
+删除：
+var res = arr.splice(1, 2);
+alert(arr); 
+alert(res); 
+
+修改：  (先删除，再增加)
+var arr =[10, 20, 30, 40,50];
+arr.splice(2, 1, "hello");
+alert(arr);//10, 20, hello, 40,50
+```
+
+### ES5新增的数组语法
+新增语法：indexof、数组遍历forEach、map映射、filter过滤、some某些、every每一个、reduce归并
+```javascript
+indexOf()
+  格式：数组.index(item, start);
+  参数： item 任意的数据  start 下标 可以不传入，默认是0
+  功能：在数组中查找第一次出现item元素下标，从start开始去查找
+  返回值： -1 没有查找到    >=0 查找到的元素的下标。
+
+var arr = [10, 20, 30, 40, 50, 20, 30];
+  var index = arr.indexOf(20, 2);
+  alert(index); //5
+```
+
+
+```javascript
+map() 映射
+
+var arr = [10, 20, 30, 40, 50];
+var newArr = arr.map(function(item, index, arr){
+    //遍历要做的事情  映射关系
+  return item * 1.3;
+});
+alert(newArr);
+alert(arr); 
+```
+
+
+```javascript
+filter() 过滤
+
+var arr = [10, 20, 30, 40, 50];
+var newArr = arr.filter(function(item, index, arr){
+    //过滤的条件
+    return item > 20;
+});
+alert(newArr);
+alert(arr); 
+```
+
+```javascript
+some  某些
+【注】在数组中查找是否有符合条件的元素，有返回true，没有返回false。
+短路操作：只要找到符合条件的元素，后面的循环就停止了。
+
+var arr = [10, 20, 30, 40, 50];
+var res = arr.some(function(item, index, arr){
+    alert(item);//10,20,30 短路操作
+    //过滤的条件
+    return item > 20;
+});
+console.log(res);//true
+console.log(arr); //[10, 20, 30, 40, 50]
+```
+
+```javascript
+every 每一个
+【注】在数组中查找每一个元素是否有符合条件，符合返回true，不符合返回false。
+短路操作：只要找到不符合条件的元素，后面的循环就停止了。
+                
+var arr = [10, 20, 30, 40, 50];
+var res = arr.every(function(item, index, arr){
+    alert(item);
+    //过滤的条件
+    return item < 100;
+});
+alert(res);
+alert(arr); 
+```
+
+### 二维数组
+二维数组：人为起的，不是官方语法
+
+数组存储数据，数组中每一个元素， 元素可以是任意的数据类型。
+
+注：数组中的元素可以是数组。
+
+```javascript
+var arr1 = [10, 20, 30];
+var arr = [true, 100, "hello", arr1];
+alert(arr.length); //4
+alert(arr[3] == arr1)  //true
+
+alert(arr[3][1]);
+alert(arr1[1])
+//以上两个获取的相等
+```
