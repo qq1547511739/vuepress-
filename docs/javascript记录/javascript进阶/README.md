@@ -1101,3 +1101,436 @@ function stopBubble(e){
     }
 }
 ```
+
+
+## 拖拽
+```javascript
+拖拽：（拖拽的三剑客）  伪代码(代码草稿)
+    mousedown
+        记录鼠标按下位置和被拖拽物体相对距离
+        var offsetX = e.clientX - node.offsetLeft;
+        var offsetY = e.clientY - node.offsetTop;
+    mousemove
+        一致保持，相对距离
+        node.style.left = e.clientX - offsetX + 'px';
+        node.style.top = e.clientY - offsetY + 'px';
+    mouseup
+        取消拖拽
+```
+具体代码：
+```javascript
+<body>
+  <div id = 'div1'></div>
+</body>
+
+<style>
+  #div1{width: 100px; height: 100px; background-color: red; position: absolute;}
+</style>
+
+var oDiv = document.getElementById("div1");
+oDiv.onmousedown = function(ev){
+    var e = ev || window.event;
+    //记录鼠标和被拖拽物体相对位置
+    var offsetX = e.clientX - oDiv.offsetLeft;
+    var offsetY = e.clientY - oDiv.offsetTop;
+
+//被拖拽物体保持相对距离和鼠标移动
+    document.onmousemove = function(ev){
+        var e = ev || window.event;
+        oDiv.style.left = e.clientX - offsetX + 'px';
+        oDiv.style.top = e.clientY - offsetY + 'px';
+    }
+}
+//取消拖拽
+document.onmouseup = function(){
+document.onmousemove = null;
+}
+
+```
+
+### 限制出界
+```javascript
+<body>
+  <div id = 'div1'></div>
+</body>
+
+<style>
+  #div1{width: 100px; height: 100px; background-color: red; position: absolute;}
+</style>
+
+
+var oDiv = document.getElementById("div1");
+oDiv.onmousedown = function(ev){
+    var e = ev || window.event;
+    //记录鼠标和被拖拽物体相对位置
+    var offsetX = e.clientX - oDiv.offsetLeft;
+    var offsetY = e.clientY - oDiv.offsetTop;
+
+//被拖拽物体保持相对距离和鼠标移动
+    document.onmousemove = function(ev){
+        var e = ev || window.event;
+        var l = e.clientX - offsetX;
+        var t = e.clientY - offsetY;
+
+    //限制出界
+    if(l <= 0){
+        l = 0;
+    }
+    var windowWidth = document.documentElement.clientWidth || document.body.clientWidth;
+    if(l >= windowWidth - oDiv.offsetWidth){
+        l = windowWidth - oDiv.offsetWidth;
+    }
+
+    if(t <= 0){
+        t = 0;
+    }
+    var windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
+    if(t >= windowHeight - oDiv.offsetHeight){
+        t = windowHeight - oDiv.offsetHeight;
+    }
+
+        oDiv.style.left = l + 'px';
+        oDiv.style.top = t + 'px';
+    }
+}
+//取消拖拽
+document.onmouseup = function(){
+document.onmousemove = null;
+}
+```
+
+
+## 事件委托
+事件委托实现步骤：<br/>
+1、找到当前节点的父节点或者祖先节点<br/>
+2、将事件添加到你找到的这个父节点或者祖先节点上<br/>
+3、找到触发对象，判断触发对象是否是想要的触发对象，进行后续的操作<br/>
+【注】事件委托的原理是事件冒泡。<br/>
+
+li委托ul将li变成红色
+```javascript
+var oUl = document.getElementById("ul1");
+oUl.onclick = function(ev){
+    var e = ev || window.event;
+    var target = e.target || window.event.srcElement;
+    if(target.nodeName.toLowerCase() == "li"){
+        target.style.backgroundColor = 'red';
+    }
+}
+
+
+var obtn = document.getElementById("btn1");
+var i = 6;
+obtn.onclick = function(){
+    var newNode = document.createElement("li");
+    newNode.innerHTML = i++ * 1111;
+    oUl.appendChild(newNode);
+}
+
+
+<body>
+    <button id = 'btn1'>新增节点</button>
+    <ul id = 'ul1'>
+        <li>1111</li>
+        <li>2222</li>
+        <li>3333</li>
+        <li>4444</li>
+        <li>5555</li>
+    </ul>
+</body>
+```
+
+## event 事件监听器
+```javascript
+1、传统事件绑定
+    <1>重复添加，覆盖
+    <2>不能精确的删除事件上的某一个函数
+
+
+2、事件监听器（低版本IE浏览器下不兼容）
+        addEventListener()
+            格式：node.addEventListener("click")
+            参数：
+                第一个参数  事件类型
+                第二个参数  绑定函数
+                第三个参数  布尔值  true  事件捕获
+                                    false 事件冒泡  默认
+
+        removeEventListener()
+            格式：node.removeEventListener
+            参数：
+                第一个参数  事件类型
+                第二个参数  删除函数名字
+```
+
+传统方法
+```javascript
+<body>
+  <button id = 'btn1'>按钮</button>
+</body>
+
+var oBtn = document.getElementById("btn1");
+    oBtn.onclick = function(){
+        alert("点击1");
+    }
+
+    oBtn.onclick = function(){
+        alert("点击2");
+    } 
+
+    //添加两个事件的话，后添加的会把前面的覆盖掉
+```
+
+事件监听器：
+```javascript
+oBtn.addEventListener("click", function(){
+    alert("点击1");
+}, false);
+
+oBtn.addEventListener("click", function(){
+    alert("点击2");
+}, false);
+
+
+<body>
+  <button id = 'btn1'>按钮</button>
+</body>
+```
+
+## 正则表达式
+
+### 正则对象方法
+正则表达式对象只有两个方法
+```javascript
+test
+    格式：正则.test(字符串)
+    功能：在字符串中匹配这个正则是否存在
+    返回值：如果匹配成功返回true，匹配失败返回false。
+
+var str = "how aRe you";
+var box = /are/i;
+alert(box.test(str));
+
+exec（了解  W3C）
+    格式：正则.exec(字符串)
+    功能：在字符串中匹配这个正则是否存在
+    返回值：返回匹配到的串，匹配成功，返回一个装有字符串的数组
+                        匹配失败，返回null
+
+var str = "how aRe you";
+var box = /are/i;
+alert(box.exec(str));
+```
+
+### 字符串中的正则
+```javascript
+字符串的函数：
+match()
+    格式：字符串.match(正则)
+    功能：在字符串匹配是否有符合正则表达式，
+    返回值：匹配成功，返回装有匹配到子串的数组
+            匹配失败，返回null
+
+var str = "how are Are ARE you";
+var box = /arex/ig;
+alert(str.match(box));
+
+replace()
+    格式：字符串.replace(oldStr/正则, newStr);
+    功能：用newStr将oldStr替换，
+    返回值：替换成功的新字符串。
+
+var str = "how are Are ARE you";
+             var newStr = str.replace(/are/ig, "*");
+             alert(newStr);
+
+split()
+    格式：字符串.split(分割符/正则);
+    功能：用分割符将原字符串进行分割
+    返回值：分割剩下的子串组成的数组。
+
+var str = "how are Are ARE you";
+             var arr = str.split(/are/i);
+            alert(arr);
+
+
+search()
+    格式：字符串.search(子串/正则)
+    功能：找到符合条件的子串第一次出现的位置
+    返回值：
+        如果找到，返回>=0的下标
+        否则，返回-1
+
+var str = "how Are are ARE you";
+alert(str.search(/are/ig));
+```
+
+
+### 元字符
+**元字符：在正则表达式中有特殊含义的字符。**
+```javascript
+单个数字和字符的元字符
+        匹配单个的任意字符
+    [范围]         匹配单个范围内的字符
+    [0-9]
+    [a-zA-Z0-9_] 匹配单个的数字、字母下划线
+    [^范围]        匹配任意一个除括号范围内的字符
+    [^0-9]     匹配任意一个非数字字符
+    \w         匹配单个的数字、字母下划线  等价于 [a-zA-Z0-9_]
+    \W         匹配单个非数字、字母下划线
+    \d         匹配单个数字  等价于 [0-9]
+    \D         匹配单个非数字  等价于 [^0-9]
+
+
+空白字符
+    \s   匹配任意单个的空白字符
+    \S   匹配任意单个非空白字符
+
+
+重复字符  x（任意的单个字符）
+    x?    匹配0个或者1个x
+    x+    匹配至少一个x字符
+    x*    匹配任意个x字符
+    x{m,n}匹配至少m个，最多n个x字符，包括n
+    x{n}  必须匹配n个x字符
+    (xyz)+ 小括号括起来的部分是当做单个字符处理
+
+
+锚字符
+    ^  行首匹配  必须以这个正则开头
+    $  行尾匹配  必须以这个正则结尾
+
+
+替代字符 | 
+            var str = "google";
+            var box = /google|baidu|bing/;
+            alert(box.test(str))
+```
+
+## localStorage
+
+本地存储技术三种：
+```javascript
+本地存储技术:
+localStorage(IE8以下不兼容)
+    1、永久存储
+    2、最大可以存储5M   客户端的一个微型数据库
+    3、只能存储string
+cookie
+    1、可以设置过期时间
+    2、最大可以存4KB
+    3、每一个域名下面最多可以存储50条数据
+sessionStorage（结合后台使用）
+```
+
+localStorage:
+```javascript
+localStorage 对象
+setItem(name, value);  //存
+getItem(name);         //取
+removeItem(name);      //删
+```
+
+代码例子：
+```javascript
+if(!window.localStorage){
+    alert("当前页面不支持localStorage");
+}else{
+    localStorage.setItem("a", "1");
+    localStorage.b = '2';
+    localStorage["c"] = "3"; 
+
+    alert(localStorage.getItem("b"));
+    alert(localStorage.c);
+    alert(localStorage['a'])
+}
+window.onload = function(){
+    var oBtn = document.getElementById("btn1");
+    oBtn.onclick = function(){
+        localStorage.removeItem("a");
+    }
+}
+
+<button id = 'btn1'>删除</button>
+```
+
+## 强制改变this指向
+1. call方法:
+```javascript
+call
+格式：函数名.call();
+参数：
+    第一个参数：传入该函数this指向的对象，传入什么强制指向什么
+    第二个参数开始：将原函数的参数往后顺延一位。
+```
+
+```javascript
+普通：
+  function show(x,y){
+     alert(this);        //window
+     alert(x + ',' + y); //20,30
+  }
+  show(20,30);
+
+
+call方法：
+  function show(x,y){
+     alert(this);        //app
+     alert(x + ',' + y); //20,30
+  }
+  show.call('app',20,30);
+```
+
+
+2.  apply
+```javascript
+ apply
+格式：函数名.apply()
+参数：  
+    第一个参数：传入该函数this指向的对象，传入什么强制指向什么
+    第二个参数：数组  数组，放入我们原有所有的参数
+```
+
+```javascript
+  function show(x,y){
+     alert(this);        //window
+     alert(x + ',' + y); //20,30
+  }
+
+  show.apply('app',[20,60]);
+```
+
+3. bind预设this指向
+```javascript
+function show(x, y){
+    alert(this);
+    alert(x + ", " + y);
+}
+var res = show.bind("app");
+res(40, 50);
+//show.bind("bind")(40, 50);
+```
+
+```javascript
+function show(){
+    alert(this);
+}
+
+window.onload = function(){
+    var oBtn = document.getElementById("btn1");
+    //show.call("call")   这样写是不对的
+    /* oBtn.onclick = function(){
+        show.call("call");
+    } */
+
+    /* oBtn.onclick = function(){
+        show.apply("apply");
+    } */
+    
+    oBtn.onclick = show.bind('bind');
+}
+
+<body>
+  <button id = 'btn1'>按钮</button>
+</body>
+```

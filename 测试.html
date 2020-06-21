@@ -6,24 +6,16 @@
   <title>Document</title>
 </head>
 <body>
+
 </body>
 
 <script>
-             window.onload = function(){
-                /*  window.onkeydown = function(ev){
-                     var e = ev || window.event;
-                    //  alert(e.keyCode);
-                    // alert(e.which);
-                    var which = e.keyCode || e.which;
-                    alert(which); //回车=13
-                 } */
-
-                 window.onkeypress = function(ev){
-                    var e = ev || window.event;
-                    var which = e.charCode || e.which;
-
-                    alert(which);
-                 }
-             }
+function show(x, y){
+    alert(this);
+    alert(x + ", " + y);
+}
+var res = show.bind("app");
+res(40, 50);
+//show.bind("bind")(40, 50);
 </script>
 </html>
