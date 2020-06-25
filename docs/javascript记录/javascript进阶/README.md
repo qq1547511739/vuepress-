@@ -1412,6 +1412,7 @@ alert(str.search(/are/ig));
 本地存储技术三种：
 ```javascript
 本地存储技术:
+楼扣死追
 localStorage(IE8以下不兼容)
     1、永久存储
     2、最大可以存储5M   客户端的一个微型数据库

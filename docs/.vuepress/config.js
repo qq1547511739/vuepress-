@@ -19,7 +19,8 @@ module.exports = {
         text: 'javascript记录',
         items: [
           { text: 'javascript基础', link: '/javascript记录/javascript基础/' },
-          { text: 'javascript进阶', link: '/javascript记录/javascript进阶/' }
+          { text: 'javascript进阶', link: '/javascript记录/javascript进阶/' },
+          { text: 'javascript高级', link: '/javascript记录/javascript高级/' }
         ]
       },
       {
@@ -34,9 +35,11 @@ module.exports = {
       {
         text: '其他记录',
         items: [
-          { text: 'promise基本使用', link: '/其他记录/promise的基本使用/' },
-          { text: 'get和post的请求方式', link: '/其他记录/get和post请求的区别/' },
-          { text: '前端题目', link: '/其他记录/前端题目/' },
+          { text: '题目', link: '/其他记录/题目/' },
+          { text: 'http协议', link: '/其他记录/http协议/' },
+          { text: 'js', link: '/其他记录/js/' },
+          { text: 'es6', link: '/其他记录/es6/' },
+          { text: 'vue', link: '/其他记录/vue/' },
         ]
       },
 

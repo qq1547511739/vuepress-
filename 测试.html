@@ -8,14 +8,21 @@
 <body>
 
 </body>
+<style>
+
+</style>
 
 <script>
-function show(x, y){
-    alert(this);
-    alert(x + ", " + y);
-}
-var res = show.bind("app");
-res(40, 50);
-//show.bind("bind")(40, 50);
+var ccc = (function(){
+    var a = 2;
+    return function(){
+        a++;
+        alert(a)
+    } 
+})()
+
+ccc();//3
+ccc();//4
+alert(a)//报错
 </script>
 </html>
