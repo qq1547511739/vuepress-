@@ -13,16 +13,29 @@
 </style>
 
 <script>
-var ccc = (function(){
-    var a = 2;
-    return function(){
-        a++;
-        alert(a)
-    } 
-})()
+// var arr = [1,2,3,0,0,0,4,4,3];
+// var newArr = [];
+// for(var i = 0; i < arr.length; i++){
+//    if(arr[i] != 3 && arr[i] != 0){
+//      newArr[newArr.length] = arr[i]
+//    }
+// }
+// console.log(newArr)
 
-ccc();//3
-ccc();//4
-alert(a)//报错
+// let zifu = 'hujhafljdlhellojhjcvhellovjsd'
+// let zifu1 = 'hello'
+// let zifu2 = zifu.indexOf(zifu1)
+// console.log(zifu2)
+
+let zifu1 = 'hello';
+let zifu2 = 'zchjkjvshilkhellovhjkhvhellofsdahellovdsfb'
+let indexArray = new Set()
+
+for(let i = 0;i < zifu2.length; i++){
+  indexArray.add(zifu2.indexOf(zifu1,i))
+}
+
+console.log(indexArray)
+
 </script>
 </html>

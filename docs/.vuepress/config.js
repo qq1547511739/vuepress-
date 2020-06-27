@@ -12,7 +12,8 @@ module.exports = {
         text: 'html css记录',
         items: [
           { text: 'flex布局', link: '/html css记录/flex布局/' },
-          { text: 'css选择器及权重', link: '/html css记录/css选择器及权重/' }
+          { text: 'css选择器及权重', link: '/html css记录/css选择器及权重/' },
+          { text: '盒模型', link: '/html css记录/盒模型/' }
         ]
       },
       {
