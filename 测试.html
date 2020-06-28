@@ -4,38 +4,41 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-</head>
-<body>
-
-</body>
-<style>
-
-</style>
-
 <script>
-// var arr = [1,2,3,0,0,0,4,4,3];
-// var newArr = [];
-// for(var i = 0; i < arr.length; i++){
-//    if(arr[i] != 3 && arr[i] != 0){
-//      newArr[newArr.length] = arr[i]
-//    }
+var arr1 = [10, 20, 30, 40, 50];
+var arr2 = [1,2,3,4,5];
+
+// arr1.sum = function(){
+//   var res = 0;
+//   for(var i = 0; i < this.length; i++){
+//     res += this[i];
+//   }
+//   return res;
 // }
-// console.log(newArr)
 
-// let zifu = 'hujhafljdlhellojhjcvhellovjsd'
-// let zifu1 = 'hello'
-// let zifu2 = zifu.indexOf(zifu1)
-// console.log(zifu2)
+// arr2.sum = function(){
+//   var res = 0;
+//   for(var i = 0; i < this.length; i++){
+//     res += this[i];
+//   }
+//   return res;
+// }
 
-let zifu1 = 'hello';
-let zifu2 = 'zchjkjvshilkhellovhjkhvhellofsdahellovdsfb'
-let indexArray = new Set()
 
-for(let i = 0;i < zifu2.length; i++){
-  indexArray.add(zifu2.indexOf(zifu1,i))
+Array.prototype.sum = function(){
+  var res = 0;
+  for(var i = 0; i < this.length; i++){
+    res += this[i];
+  }
+  return res;
 }
 
-console.log(indexArray)
-
+console.log(arr1.sum());
+console.log(arr2.sum());
+alert(arr1.sum == arr2.sum);
 </script>
+</head>
+<body>
+  
+</body>
 </html>

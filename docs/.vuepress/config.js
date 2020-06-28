@@ -13,7 +13,9 @@ module.exports = {
         items: [
           { text: 'flex布局', link: '/html css记录/flex布局/' },
           { text: 'css选择器及权重', link: '/html css记录/css选择器及权重/' },
-          { text: '盒模型', link: '/html css记录/盒模型/' }
+          { text: '盒模型', link: '/html css记录/盒模型/' },
+          { text: '垂直居中的方法', link: '/html css记录/垂直居中的方法/' },
+          { text: '绝对定位与相对定位', link: '/html css记录/绝对定位与相对定位/' },
         ]
       },
       {

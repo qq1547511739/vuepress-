@@ -178,10 +178,143 @@ new和构造函数确认了眼神：<br/>
 
 
 ## 垃圾回收机制
-当一个对象没有任何一个变量或属性对他进行引用，此时我们将无操作该对象<br/>
+从根开始查找引用的对象，当一个对象没有任何一个变量或属性对他进行引用，对象将被垃圾回收机制所回收<br/>
 此时这种对象就是一个垃圾，这种对象过多会占用大量的内存，导致程序变慢，所以必须清理<br/>
-
 在js中拥有自动的垃圾回收机制，会自动将这些垃圾从内存中销毁<br/>
-我们要做的只是将不在使用的对象设置null即可<br/>
 
 
+## 原型
+**prototype 原型对象** (普了托time)<br/>
+概念：每一个函数上，都有一个原型对象prototype<br/>
+
+一般用在构造函数上，我们可以给构造函数的原型prototype添加方法
+1. 如果我们将方法添加到构造函数的原型prototype对象上，
+2. 构造函数构造出来的对象将共享原型上所有的方法
+
+
+**属性__proto__**<br/>
+构造函数构造出来的对象，都有一个属性__proto__，指向构造出这个对象的构造函数的原型<br/>
+
+
+**原型链**
+当试图得到一个对象的属性时，如果这个对象不存在这个属性的时候，<br/>
+那么他就会去他的构造函数prototype里面去找，因为prototype也是一个对象<br/>
+所以它也有一个__proto__属性，它会一层一层的往上面找，这就是原型链<br/>
+一直到null为止<br/>
+
+
+**instanceof 关键字**(in死吞赛夫)<br/>
+功能：判断某一个对象是否是这个构造函数构造出来的
+
+
+
+```javascript
+function show(){
+
+}
+alert(show.prototype)//此处原型为object
+```
+
+给数组添加一个方法，可以对数组中每一个元素进行求和
+普通方法：
+```javascript
+var arr1 = [10, 20, 30, 40, 50];
+var arr2 = [1,2,3,4,5];
+
+arr1.sum = function(){
+  var res = 0;
+  for(var i = 0; i < this.length; i++){
+    res += this[i];
+  }
+  return res;
+}
+
+arr2.sum = function(){
+  var res = 0;
+  for(var i = 0; i < this.length; i++){
+    res += this[i];
+  }
+  return res;
+}
+console.log(arr1.sum());
+console.log(arr2.sum());
+```
+
+原型方法：
+```javascript
+var arr1 = [10, 20, 30, 40, 50];
+var arr2 = [1,2,3,4,5];
+
+Array.prototype.sum = function(){
+  var res = 0;
+  for(var i = 0; i < this.length; i++){
+    res += this[i];
+  }
+  return res;
+}
+
+console.log(arr1.sum());//150
+console.log(arr2.sum());//15
+alert(arr1.sum == arr2.sum);//true
+```
+
+混合法：
+```javascript
+function Person(name, sex){           
+    this.name = name;
+    this.sex = sex;      
+}
+
+//Person构造函数添加方法，添加在构造函数的原型上prototype
+Person.prototype.showName = function(){
+    alert("我的名字" + this.name);
+}
+Person.prototype.showSex = function(){
+    alert("我的性别" + this.sex);
+}
+
+var p1 = new Person("blue", "男");
+p1.showName();
+p1.showSex();
+
+
+var p2 = new Person("red", "女");
+p2.showName();
+p2.showSex();
+
+alert(p1.showName === p2.showName); //true
+```
+
+普通方法：
+```javascript
+function Person(name, sex){
+    //1、原料
+    // var obj = new Object();
+    // this = new Object();
+
+    //2、加工
+    this.name = name;
+    this.sex = sex;
+    this.showName = function(){
+        alert("我的名字叫" + this.name);
+    }
+    this.showSex = function(){
+        alert("我的性别是" + this.sex + "的");
+    }
+
+    //3、出厂
+    // return obj;
+    //return this;
+}
+
+var p1 = new Person("blue", "男");
+p1.showName();
+p1.showSex();
+
+
+var p2 = new Person("red", "女");
+p2.showName();
+p2.showSex();
+
+alert(p1.showName === p2.showName); //false,虽然代码一样，但是是两套不同的函数
+```
