@@ -1,41 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 </head>
 <body>
-  
+    <img src="" alt="">
 </body>
-<script>
-      // base.js
-      let count = 0;
-    setTimeout(() => {
-        console.log("base.count", ++count);
-    }, 500)
-
-    module.exports.count = count;
-
-    // commonjs.js
-    const {count} = require('./base');
-    setTimeout(() => {
-        console.log("count is" + count + 'in commonjs');
-    }, 1000)
-    
-
-    // base1.js
-    let count = 0;
-    setTimeout(() => {
-        console.log("base.count", ++count);
-    }, 500)
-    exports const count = count;
-
-    // es6.js
-    import { count } from './base1';
-    setTimeout(() => {
-        console.log("count is" + count + 'in es6');
-    }, 1000)
-
-</script>
 </html>

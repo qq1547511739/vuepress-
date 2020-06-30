@@ -38,7 +38,6 @@ module.exports = {
       {
         text: '其他记录',
         items: [
-          { text: '题目', link: '/其他记录/题目/' },
           { text: 'http协议', link: '/其他记录/http协议/' },
           { text: 'js', link: '/其他记录/js/' },
           { text: 'es6', link: '/其他记录/es6/' },
