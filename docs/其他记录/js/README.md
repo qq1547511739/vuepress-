@@ -318,3 +318,4 @@ p2.showSex();
 
 alert(p1.showName === p2.showName); //false,虽然代码一样，但是是两套不同的函数
 ```
+
