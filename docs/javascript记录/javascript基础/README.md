@@ -800,3 +800,25 @@ alert(arr[3][1]);
 alert(arr1[1])
 //以上两个获取的相等
 ```
+
+### 数组去重
+
+方法1：利用indexOf 和 push 特性
+```javascript
+var arr = [1,1,2,2,3,3,4,4,];
+var newarr = [];
+for(var i = 0; i < arr.length; i++){
+  if(newarr.indexOf(arr[i]) == -1){
+    newarr.push(arr[i])
+  }
+}
+console.log(newarr)
+```
+
+方法2：用扩展运算符+set集合<br/>
+固定格式：[...new Set(数组)]
+```javascript
+var arr = [1,1,2,2,3,3,4,4];
+newarr = [...new Set(arr)];
+console.log(newarr);
+```
