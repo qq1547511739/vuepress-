@@ -261,5 +261,71 @@ v-if、v-else-if、v-else结合使用
   })
 ```
 
+## v-if和v-show的区别
+请问 v-if 和 v-show 有什么区别？<br/>
+a.实现方式： v-if是根据后面数据的真假值判断直接从Dom树上删除或重建元素节点。  v-show只是在修改元素的css样式，也就是display的属性值，元素始终在Dom树上。<br/>
+b.编译过程：v-if切换有一个局部编译/卸载的过程，切换过程中合适地销毁和重建内部的事件监听和子组件；  v-show只是简单的基于css切换；<br/>
+c.编译条件：v-if是惰性的，如果初始条件为假，则什么也不做；只有在条件第一次变为真时才开始局部编译； v-show是在任何条件下（首次条件是否为真）都被编译，然后被缓存，而且DOM元素始终被保留；<br/>
+d.性能消耗：v-if有更高的切换消耗，不适合做频繁的切换；  v-show有更高的初始渲染消耗，适合做频繁的额切换<br/>
 
+
+## 循环遍历
+
+### 遍历数组：
+```javascript
+<body>
+<div id="app">
+  <ul>
+    在遍历过程中，没有使用索引值
+    <li v-for='n in name'>{{n}}</li>
+    在遍历过程中获取索引值
+    <li v-for='(item,index) in name'>{{index+1}}.{{item}}</li>
+  </ul>
+</div>
+</body>
+
+<script src="vue.js"></script>
+<script>
+  const app = new Vue({
+    el:'#app',
+    data:{
+      name:['wan','jia','peng']
+    }
+  })
+</script>
+```
+![text](./img/bianli.jpg)
+
+
+### 遍历对象：
+
+```javascript
+<body>
+<div id="app">
+  <ul>
+    如果只获取一个值，获取到的是value
+    <li v-for='n in name'>{{n}}</li>
+    获取key和value 格式：(value,key)
+    <li v-for='(value,key) in name'>{{value}}-{{key}}</li>
+    获取key和value和index 格式：(value,key，index)
+    <li v-for='(value,key,index) in name'>{{value}}-{{key}}-{{index}}</li>
+  </ul>
+</div>
+</body>
+<script src="vue.js"></script>
+<script>
+  const app = new Vue({
+    el:'#app',
+    data: {
+      name: {
+        name:'wanjiapeng',
+        age:18,
+        heighe:188
+      }
+    }
+  })
+</script>
+```
+
+![text](./img/bianliduixiang.jpg)
 
